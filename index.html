@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MetroMultimedia</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2322d3ee'/%3E%3Crect x='4' y='6' width='24' height='20' rx='4' fill='%230b0f1f'/%3E%3Ccircle cx='11' cy='14' r='2' fill='%23a3e635'/%3E%3Ccircle cx='21' cy='14' r='2' fill='%23a3e635'/%3E%3Cpath d='M10 19q6 6 12 0' stroke='%23a3e635' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 :root{--bg:#0b0f1f;--panel:#121a33;--text:#eef2ff;--mute:#b4bedf;--cy:#22d3ee;--mg:#e879f9;--ye:#facc15;--gr:#a3e635;--bd:#1f2b52;--btn:#22d3ee;--btnt:#06222b;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 :root[data-theme="light"]{--bg:#f3f6fb;--panel:#fff;--text:#0b1020;--mute:#3b4668;--cy:#0e7490;--mg:#a21caf;--ye:#a16207;--gr:#3f6212;--bd:#c3cde6;--btn:#0e7490;--btnt:#fff;color-scheme:light}
@@ -14,6 +15,8 @@ body{margin:0;background:var(--bg);color:var(--text);font:17px/1.5 "Space Grotes
 .wrap{max-width:760px;margin:0 auto;padding:16px}
 header{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;margin-bottom:12px}
 header b{color:var(--cy);font-size:15px}
+.logo{display:flex;align-items:center;gap:8px}
+.logo svg{width:32px;height:32px;flex:none}
 .tg{display:flex;gap:6px}
 button{font:inherit;cursor:pointer}
 .chip{background:none;border:1px solid var(--cy);color:var(--cy);border-radius:8px;padding:6px 10px;font-size:14px;min-height:36px}
@@ -65,7 +68,10 @@ summary{cursor:pointer;font-weight:700;min-height:32px}
 <body>
 <div class="wrap">
 <header>
+<div class="logo">
+<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="var(--cy)"/><polyline points="7,23 7,9 16,19 25,9 25,23" fill="none" stroke="var(--btnt)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="9" r="2.6" fill="var(--btnt)"/><circle cx="16" cy="19" r="2.6" fill="var(--btnt)"/><circle cx="25" cy="9" r="2.6" fill="var(--btnt)"/></svg>
 <b class="mono">&gt; MetroMultimedia</b>
+</div>
 <div class="tg" role="group" aria-label="Apariencia">
 <button class="chip" data-t="dark" aria-pressed="true">Oscuro</button>
 <button class="chip" data-t="light" aria-pressed="false">Claro</button>
