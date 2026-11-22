@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MetroMultimedia</title>
+<style>
+:root{--bg:#0b0f1f;--panel:#121a33;--text:#eef2ff;--mute:#b4bedf;--cy:#22d3ee;--mg:#e879f9;--ye:#facc15;--gr:#a3e635;--bd:#1f2b52;--btn:#22d3ee;--btnt:#06222b;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="light"]{--bg:#f3f6fb;--panel:#fff;--text:#0b1020;--mute:#3b4668;--cy:#0e7490;--mg:#a21caf;--ye:#a16207;--gr:#3f6212;--bd:#c3cde6;--btn:#0e7490;--btnt:#fff;color-scheme:light}
+:root[data-theme="hc"]{--bg:#000;--panel:#000;--text:#fff;--mute:#fff;--cy:#00e5ff;--mg:#ff7bff;--ye:#ffee00;--gr:#b6ff00;--bd:#fff;--btn:#ffee00;--btnt:#000}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.5 "Space Grotesk","Segoe UI",system-ui,sans-serif}
+.mono{font-family:"JetBrains Mono","Consolas",ui-monospace,monospace}
+.wrap{max-width:760px;margin:0 auto;padding:16px}
+header{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;margin-bottom:12px}
+header b{color:var(--cy);font-size:15px}
+.tg{display:flex;gap:6px}
+button{font:inherit;cursor:pointer}
+.chip{background:none;border:1px solid var(--cy);color:var(--cy);border-radius:8px;padding:6px 10px;font-size:14px;min-height:36px}
+.chip[aria-pressed="true"]{background:var(--cy);color:var(--btnt)}
+.btn{background:var(--btn);color:var(--btnt);border:0;border-bottom:4px solid rgba(0,0,0,.35);border-radius:12px;padding:14px 18px;font-weight:700;width:100%;min-height:48px}
+.btn.alt{background:none;color:var(--cy);border:2px solid var(--cy)}
+:focus-visible{outline:3px solid var(--ye);outline-offset:3px}
+.card{background:var(--panel);border:2px solid var(--cy);border-radius:20px;padding:18px}
+h1{font-size:30px;line-height:1.15;margin:12px 0 8px;text-align:center}
+h2{font-size:21px;margin:0 0 8px}
+p{margin:6px 0}
+.center{text-align:center}
+.hud{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.hud .q{flex:1 1 100%;font-weight:700}
+.pill{border:2px solid var(--gr);color:var(--gr);border-radius:10px;padding:2px 10px;font-size:14px}
+.pill.p2{border-color:var(--mg);color:var(--mg)}
+.bars{display:flex;gap:6px;margin:6px 0 10px}
+.bars i{flex:1;height:6px;border-radius:3px;background:var(--bd)}
+.bars i.on{background:var(--gr)}
+.tabs{display:flex;gap:8px;margin-bottom:10px}
+.tabs .chip{flex:1}
+svg text{fill:var(--text);font-size:12px}
+.st rect,.st path{fill:var(--bg);stroke-width:3}
+.st{cursor:pointer}
+.st:hover rect,.st:hover path{fill:var(--panel)}
+.st.hint rect,.st.hint path{stroke:var(--ye)!important;stroke-width:5;fill:var(--ye)}
+.st.ok rect,.st.ok path{fill:var(--gr)}
+.msg{min-height:26px;margin:8px 0;font-weight:600}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;width:100%;background:var(--panel);color:var(--text);border:2px solid var(--bd);border-radius:12px;padding:12px;margin:8px 0;min-height:48px}
+.opt b{background:var(--mg);color:var(--btnt);border-radius:6px;width:26px;height:26px;display:grid;place-items:center;flex:none}
+.opt.good{border-color:var(--gr);background:rgba(163,230,53,.15)}
+.opt.bad{border-color:var(--mg);opacity:.7}
+.tag{display:inline-block;padding:2px 10px;border-radius:8px;border:2px solid var(--cy);color:var(--cy);font-size:14px}
+.tag.m{border-color:var(--mg);color:var(--mg)}
+.tag.t{border-color:var(--ye);color:var(--ye)}
+dl{margin:10px 0}dt{color:var(--ye);font-weight:700;margin-top:8px}dd{margin:0}
+details{background:var(--panel);border:2px solid var(--bd);border-radius:12px;margin:8px 0;padding:8px 12px}
+summary{cursor:pointer;font-weight:700;min-height:32px}
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.mod{border:2px solid var(--cy);border-radius:14px;padding:12px 4px;text-align:center;font-size:14px}
+.mod.lock{border-style:dashed;border-color:var(--bd);color:var(--mute)}
+.mod.on{border-color:var(--gr);color:var(--gr)}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--mute);margin:6px 0}
+.foot{font-size:13px;color:var(--mute);margin-top:16px;text-align:center}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:no-preference){.st.hint{animation:p 1s infinite alternate}@keyframes p{to{opacity:.55}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<b class="mono">&gt; MetroMultimedia</b>
+<div class="tg" role="group" aria-label="Apariencia">
+<button class="chip" data-t="dark" aria-pressed="true">Oscuro</button>
+<button class="chip" data-t="light" aria-pressed="false">Claro</button>
+<button class="chip" data-t="hc" aria-pressed="false">Alto contraste</button>
+</div>
+</header>
+
+<main>
+<section id="home" class="card">
+<svg viewBox="0 0 300 110" role="img" aria-label="Tren con tres vagones: uno con carita sonriente, uno con botón de reproducir y uno con onda de sonido" style="width:100%;max-width:340px;display:block;margin:0 auto">
+<rect x="20" y="30" width="110" height="46" rx="8" fill="var(--cy)"/>
+<rect x="34" y="40" width="48" height="26" rx="4" fill="#0b0f1f"/>
+<circle cx="50" cy="50" r="3" fill="var(--gr)"/><circle cx="66" cy="50" r="3" fill="var(--gr)"/>
+<path d="M48 57 q10 8 20 0" stroke="var(--gr)" stroke-width="3" fill="none"/>
+<line x1="75" y1="30" x2="75" y2="18" stroke="var(--ye)" stroke-width="3"/><circle cx="75" cy="15" r="4" fill="var(--ye)"/>
+<rect x="136" y="26" width="52" height="50" rx="8" fill="#a78bfa"/>
+<rect x="152" y="38" width="22" height="18" rx="3" fill="#0b0f1f"/><path d="M160 42 l8 5 l-8 5z" fill="var(--ye)"/>
+<rect x="194" y="34" width="52" height="42" rx="8" fill="var(--mg)"/>
+<path d="M206 55v-6M214 62v-20M222 58v-12M230 64v-24" stroke="#0b0f1f" stroke-width="3" stroke-linecap="round"/>
+<circle cx="45" cy="84" r="7" fill="none" stroke="var(--text)" stroke-width="2"/><circle cx="75" cy="84" r="7" fill="none" stroke="var(--text)" stroke-width="2"/><circle cx="105" cy="84" r="7" fill="none" stroke="var(--text)" stroke-width="2"/>
+<circle cx="162" cy="84" r="7" fill="none" stroke="var(--text)" stroke-width="2"/><circle cx="220" cy="84" r="7" fill="none" stroke="var(--text)" stroke-width="2"/>
+<line x1="10" y1="94" x2="290" y2="94" stroke="var(--cy)" stroke-width="3"/>
+</svg>
+<h1>La misión del viajero</h1>
+<p class="center">Conecta cada estación con el producto multimedia que le corresponde. Cada acierto desbloquea un módulo.</p>
+<p class="center"><span class="tag t mono">3 accesos de pista · +10 pts por acierto</span></p>
+<button class="btn mono" id="go">&gt; Iniciar viaje</button>
+<p></p>
+<button class="btn alt mono" id="free">Explorar el mapa sin jugar</button>
+</section>
+
+<section id="app" hidden>
+<div class="hud">
+<div class="q" id="mq" aria-live="polite">Explora el mapa</div>
+<span class="pill mono" id="pts">0 pts</span>
+<span class="pill p2 mono" id="acc">3 accesos</span>
+<span class="pill mono" id="mn">Misión 0/5</span>
+</div>
+<div class="bars" id="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+<div class="tabs" role="group" aria-label="Vista">
+<button class="chip" id="tmap" aria-pressed="true">Mapa</button>
+<button class="chip" id="tlist" aria-pressed="false">Lista accesible</button>
+</div>
+
+<div id="mapv" class="card">
+<svg id="map" viewBox="0 0 360 290" role="group" aria-label="Mapa de metro de tipos de productos multimedia. Cada estación es un botón."></svg>
+<div class="leg"><span>━━ Línea interactiva (trazo continuo)</span><span>╍╍ Línea audiovisual (trazo discontinuo)</span><span>◆ Estación de cambio</span></div>
+</div>
+<div id="listv" class="card" hidden></div>
+
+<div id="msg" class="msg" role="status" aria-live="polite"></div>
+<div id="quiz" class="card" hidden></div>
+<div id="hintrow" style="margin-top:10px" hidden><button class="btn alt mono" id="hint">Pista (−5 pts)</button></div>
+<div id="ficha" class="card" hidden tabindex="-1" style="margin-top:12px"></div>
+</section>
+
+<section id="end" class="card" hidden>
+<h1>¡Viaje completado!</h1>
+<p class="center">Has conectado las estaciones con su producto multimedia.</p>
+<p class="center"><span class="pill mono" id="fpts"></span></p>
+<div class="mods" id="mods"></div>
+<button class="btn mono" id="again">&gt; Iniciar nuevo viaje</button>
+<p></p>
+<button class="btn alt mono" id="tomap">Ver mapa y fichas</button>
+</section>
+</main>
+<p class="foot">Recurso educativo de la Fase 3 · Introducción a la ingeniería multimedia (UNAD). Íconos e ilustraciones propias, creadas con formas vectoriales.</p>
+<p class="foot">Fuentes: Saza, I. D. (2022). <i>Tipologías Multimedia</i> [Objeto virtual de aprendizaje]. Repositorio Institucional UNAD. https://repository.unad.edu.co/handle/10596/49282 · Montañez, L. (Productor). (2019). <i>Multimedia</i> [Repositorio UNAD]. https://repository.unad.edu.co/handle/10596/26914</p>
+</div>
+
+<script>
+const S=[
+{id:"sitio",n:"Sitio web",l:"i",x:34,y:150,d:"Conjunto de páginas enlazadas que se visitan desde un navegador.",c:"Navegación por enlaces, texto, imágenes y formularios.",u:"Informar, ofrecer servicios o vender en línea.",e:"La página web de una universidad."},
+{id:"elearn",n:"E-learning",l:"i",x:104,y:150,d:"Cursos o contenidos educativos que se estudian por internet.",c:"Lecciones, actividades, evaluaciones y seguimiento del avance.",u:"Aprender a distancia, a tu ritmo.",e:"Un curso virtual en un campus."},
+{id:"game",n:"Videojuego",l:"x",x:180,y:150,d:"Producto con reglas, retos y objetivos que el jugador decide cómo superar.",c:"Es interactivo y audiovisual a la vez: imagen, sonido y decisiones.",u:"Entretener, entrenar habilidades o enseñar jugando.",e:"Un juego educativo de matemáticas."},
+{id:"ra",n:"Realidad aumentada",l:"i",x:256,y:150,d:"Tecnología que superpone elementos digitales sobre el mundo real.",c:"Usa la cámara del celular, modelos 3D e interacción espacial.",u:"Visualizar objetos o información sobre el entorno.",e:"Ver un dinosaurio 3D sobre tu escritorio."},
+{id:"sim",n:"Simulador",l:"i",x:326,y:150,d:"Entorno interactivo que imita una situación real para practicar.",c:"Responde a las acciones del usuario y permite repetir sin riesgo.",u:"Entrenar y experimentar sin consecuencias reales.",e:"Un simulador de vuelo."},
+{id:"pod",n:"Podcast",l:"a",x:34,y:250,d:"Programa de audio por episodios que se escucha cuando quieras.",c:"Solo audio, publicación periódica, ideal para escuchar en movimiento.",u:"Contar historias, entrevistar y compartir conocimiento.",e:"El programa radial de la UNAD Virtual."},
+{id:"anim",n:"Animación",l:"a",x:110,y:250,d:"Imágenes en secuencia que crean sensación de movimiento.",c:"Dibujos, 3D o recortes, con música y voz; el usuario solo observa.",u:"Explicar ideas o contar historias de forma visual.",e:"Un video explicativo animado."},
+{id:"corto",n:"Cortometraje",l:"a",x:250,y:50,d:"Película de corta duración con una historia completa.",c:"Narrativa audiovisual con guion, imagen, sonido y edición.",u:"Narrar, sensibilizar o experimentar con el lenguaje del cine.",e:"Un corto sobre el cuidado del agua."},
+{id:"clip",n:"Videoclip",l:"a",x:326,y:50,d:"Video breve que acompaña una canción.",c:"Combina música, imagen y edición con un ritmo marcado.",u:"Promocionar y dar identidad visual a una canción.",e:"El video de una canción en YouTube."}];
+const M=[
+{s:"pod",t:"¿En qué estación viaja el podcast?",q:"¿Qué formato usa principalmente un podcast?",o:["Solo audio, por episodios","Imagen en movimiento y juego","Realidad 3D sobre la cámara"],a:0,x:"El podcast se basa en audio publicado por episodios."},
+{s:"game",t:"Toca la estación donde se cruzan las dos líneas.",q:"¿Qué distingue al videojuego de un podcast?",o:["Solo se escucha, sin imágenes","El jugador decide y supera retos","Se publica siempre por episodios"],a:1,x:"El videojuego tiene reglas y retos: por eso es una estación de cambio, interactivo y audiovisual."},
+{s:"elearn",t:"Toca la estación donde se estudia a distancia.",q:"¿Para qué sirve principalmente el e-learning?",o:["Para hacer música","Para aprender con contenidos y actividades en línea","Para ver películas cortas"],a:1,x:"El e-learning organiza lecciones, actividades y evaluaciones para estudiar por internet."},
+{s:"ra",t:"Toca la estación que usa la cámara del celular.",q:"¿Qué hace la realidad aumentada?",o:["Crea mundos totalmente virtuales","Graba episodios de audio","Superpone elementos digitales al mundo real"],a:2,x:"La realidad aumentada suma capas digitales a lo que ves en tu entorno."},
+{s:"anim",t:"Toca la estación de las imágenes con movimiento.",q:"¿Qué define a una animación?",o:["Imágenes en secuencia que simulan movimiento","Páginas enlazadas","Preguntas y puntos"],a:0,x:"La animación crea movimiento a partir de imágenes en secuencia."}];
+const $=i=>document.getElementById(i),L={i:"Línea interactiva",a:"Línea audiovisual",x:"Estación de cambio"};
+let pts=0,acc=3,mi=-1,step="free",done=[];
+
+/* Tema */
+document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{
+ document.documentElement.setAttribute("data-theme",b.dataset.t);
+ document.querySelectorAll("[data-t]").forEach(x=>x.setAttribute("aria-pressed",x===b));});
+
+/* Mapa */
+function drawMap(){
+ let h='<polyline points="34,150 326,150" fill="none" stroke="var(--cy)" stroke-width="6" stroke-linecap="round"/>'+
+ '<polyline points="34,250 110,250 180,150 250,50 326,50" fill="none" stroke="var(--mg)" stroke-width="6" stroke-dasharray="12 8" stroke-linecap="round"/>';
+ S.forEach(s=>{
+  const col=s.l==="i"?"var(--cy)":s.l==="a"?"var(--mg)":"var(--ye)";
+  const sh=s.l==="x"?`<path d="M${s.x} ${s.y-14}L${s.x+14} ${s.y}L${s.x} ${s.y+14}L${s.x-14} ${s.y}Z" stroke="${col}"/>`:`<rect x="${s.x-9}" y="${s.y-9}" width="18" height="18" rx="4" stroke="${col}"/>`;
+  const ty=s.y+(s.l==="a"&&s.y<100?-18:s.y===250?28:s.l==="x"?-22:28);
+  const lines=s.n.split(" ");
+  const tx=lines.map((w,i)=>`<tspan x="${s.x}" dy="${i?12:0}">${w}</tspan>`).join("");
+  h+=`<g class="st" data-id="${s.id}" role="button" tabindex="0" aria-label="${s.n}, ${L[s.l]}">${sh}<text x="${s.x}" y="${ty}" text-anchor="middle">${tx}</text></g>`;});
+ $("map").innerHTML=h;
+ $("map").querySelectorAll(".st").forEach(g=>{
+  g.onclick=()=>pick(g.dataset.id);
+  g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(g.dataset.id)}};});}
+function drawList(){
+ const grp=(k,t)=>`<h2>${t}</h2>`+S.filter(s=>s.l===k).map(s=>`<details><summary>${s.n}</summary>${fichaBody(s)}<button class="btn mono pb" data-id="${s.id}" hidden>Elegir esta estación</button></details>`).join("");
+ $("listv").innerHTML=grp("i","Línea interactiva")+grp("a","Línea audiovisual")+grp("x","Estación de cambio (ambas líneas)");
+ document.querySelectorAll(".pb").forEach(b=>b.onclick=()=>pick(b.dataset.id));}
+function setPB(){document.querySelectorAll(".pb").forEach(b=>b.hidden=step!=="find")}
+function fichaBody(s){return `<dl><dt>¿Qué es?</dt><dd>${s.d}</dd><dt>Características</dt><dd>${s.c}</dd><dt>¿Para qué sirve?</dt><dd>${s.u}</dd><dt>Ejemplo</dt><dd>${s.e}</dd></dl>`}
+function showFicha(id){
+ const s=S.find(x=>x.id===id),f=$("ficha");
+ f.innerHTML=`<span class="tag ${s.l==="a"?"m":s.l==="x"?"t":""}">${L[s.l]}</span><h2>${s.n}</h2>${fichaBody(s)}<button class="btn alt mono" id="cf">Cerrar ficha</button>`;
+ f.hidden=false;f.focus();f.scrollIntoView({block:"nearest"});$("cf").onclick=()=>{f.hidden=true};}
+function msg(t){$("msg").textContent=t;setPB()}
+
+/* Juego */
+function setTab(m){$("mapv").hidden=m!=="map";$("listv").hidden=m!=="list";
+ $("tmap").setAttribute("aria-pressed",m==="map");$("tlist").setAttribute("aria-pressed",m==="list");}
+$("tmap").onclick=()=>setTab("map");$("tlist").onclick=()=>setTab("list");
+function hud(){setPB();$("pts").textContent=pts+" pts";$("acc").textContent=acc+" accesos";
+ $("mn").textContent="Misión "+Math.min(done.length+(step==="free"?0:1),5)+"/5";
+ [...$("bars").children].forEach((b,i)=>b.classList.toggle("on",i<done.length));}
+function start(play){
+ $("home").hidden=true;$("end").hidden=true;$("app").hidden=false;
+ pts=0;acc=3;done=[];mi=-1;$("quiz").hidden=true;$("ficha").hidden=true;
+ document.querySelectorAll(".st").forEach(g=>g.classList.remove("ok","hint"));
+ if(play)nextMission();else{step="free";$("mq").textContent="Explora el mapa: toca una estación para ver su ficha.";$("hintrow").hidden=true;msg("");hud();}}
+function nextMission(){
+ mi++;$("quiz").hidden=true;
+ if(mi>=M.length)return finish();
+ step="find";$("mq").textContent="Misión "+(mi+1)+": "+M[mi].t;$("hintrow").hidden=false;$("hint").disabled=acc<1;
+ msg("Toca la estación en el mapa o elígela en la lista accesible.");hud();
+ document.querySelectorAll(".st").forEach(g=>g.classList.remove("hint"));}
+function pick(id){
+ if(step!=="find"&&step!=="quiz"){showFicha(id);return}
+ if(step==="quiz"){showFicha(id);return}
+ if(id===M[mi].s){
+  document.querySelector(`.st[data-id="${id}"]`).classList.remove("hint");
+  step="quiz";msg("¡Estación correcta! Responde la pregunta.");$("hintrow").hidden=true;showQuiz();
+ }else msg("Esa no es. Revisa la pista de la misión e intenta otra estación.");}
+function showQuiz(){
+ const m=M[mi],q=$("quiz");
+ q.innerHTML=`<h2>${m.q}</h2>`+m.o.map((t,i)=>`<button class="opt" data-i="${i}"><b class="mono">${"ABC"[i]}</b>${t}</button>`).join("")+`<div id="fb" aria-live="polite"></div>`;
+ q.hidden=false;
+ q.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+  const i=+b.dataset.i;
+  if(i===m.a){
+   pts+=10;done.push(m.s);b.classList.add("good");
+   q.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+   document.querySelector(`.st[data-id="${m.s}"]`).classList.add("ok");
+   $("fb").innerHTML=`<p><b>Conexión establecida.</b> ${m.x} <span class="pill mono">+10 pts</span></p><button class="btn mono" id="nx">&gt; Seguir viaje</button>`;
+   $("nx").onclick=nextMission;$("nx").focus();step="free";hud();
+  }else{b.classList.add("bad");b.disabled=true;$("fb").innerHTML="<p>Casi. Esa opción no es. Prueba con otra.</p>";}});
+ q.scrollIntoView({block:"nearest"});}
+$("hint").onclick=()=>{
+ if(acc<1||step!=="find")return;acc--;pts=Math.max(0,pts-5);
+ document.querySelector(`.st[data-id="${M[mi].s}"]`).classList.add("hint");
+ msg($("listv").hidden?"Pista: la estación resaltada en amarillo.":"Pista: es la estación "+S.find(x=>x.id===M[mi].s).n+".");$("hint").disabled=acc<1;hud();};
+function finish(){
+ $("app").hidden=true;$("end").hidden=false;$("fpts").textContent=pts+" pts · "+done.length+"/5 módulos";
+ $("mods").innerHTML=M.map(m=>{const s=S.find(x=>x.id===m.s),on=done.includes(m.s);
+  return `<div class="mod ${on?"on":"lock"}">${on?"✔":"🔒"}<br>${on?s.n:"Bloqueado"}</div>`}).join("");
+ $("again").focus();}
+$("go").onclick=()=>start(true);$("free").onclick=()=>start(false);
+$("again").onclick=()=>start(true);
+$("tomap").onclick=()=>{$("end").hidden=true;$("app").hidden=false;step="free";$("mq").textContent="Explora el mapa: toca una estación para ver su ficha.";$("hintrow").hidden=true;$("quiz").hidden=true;msg("");hud();};
+drawMap();drawList();
+</script>
+</body>
+</html>
